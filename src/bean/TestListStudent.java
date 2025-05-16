@@ -37,6 +37,7 @@ public class TestListStudent implements Serializable {
 	public String getSubjectCd() {
 		return subjectCd;
 	}
+	
 
 	public void setSubjectCd(String subjectCd) {
 		this.subjectCd = subjectCd;
