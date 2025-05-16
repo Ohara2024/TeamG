@@ -4,11 +4,74 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>得点管理システム</title>
+
+<style>
+    body {
+        font-family: "メイリオ", Meiryo, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
+
+    .content {
+        width: 80%;
+        margin: 40px auto;
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 12px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f0f0f0;
+        color: #333;
+    }
+
+    tr:nth-child(even) {
+        background-color: #fafafa;
+    }
+
+    tr:hover {
+        background-color: #e6f7ff;
+    }
+
+    .link {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .link a {
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+    }
+
+    .link a:hover {
+        text-decoration: underline;
+    }
+</style>
 </head>
 <body>
 <div class="content">
 <h2>学生一覧</h2>
-<table border="1">
+<table>
 <tr>
   <th>入学年度</th>
   <th>学生番号</th>
@@ -25,7 +88,7 @@
     ResultSet rs = null;
 
     try {
-        Class.forName("org.h2.Driver"); // JDBCドライバのロード
+        Class.forName("org.h2.Driver");
         conn = DriverManager.getConnection(url, user, password);
         stmt = conn.createStatement();
 
