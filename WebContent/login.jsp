@@ -86,7 +86,7 @@
             </form>
         </div>
         <footer>
-            &copy; 2025 TIC<br>大原情報専門学校
+            &copy; 2025 TIC<br>大原学園
         </footer>
     </div>
 

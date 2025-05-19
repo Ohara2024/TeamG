@@ -138,7 +138,7 @@
     </div>
 
     <footer>
-        &copy; 2025 TIC<br>大阪学園
+        &copy; 2025 TIC<br>大原学園
     </footer>
 </body>
 </html>
