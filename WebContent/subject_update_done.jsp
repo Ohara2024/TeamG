@@ -3,12 +3,16 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Insert title here</title>
+    <title>科目変更完了画面</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
+<h2>科目情報変更</h2>
+
+<p>変更が完了しました</p>
 
 
+<a></a>
 
 </body>
 </html>
