@@ -7,12 +7,12 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-<h2>科目情報変更</h2>
+<h2>科目情報変更</h2><br>
 
 <p>変更が完了しました</p>
 
-
-<a></a>
+<br><br><br>
+<a href="SubjectList.jsp">科目一覧</a>
 
 </body>
 </html>
