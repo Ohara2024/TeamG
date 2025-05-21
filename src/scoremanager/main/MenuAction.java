@@ -13,11 +13,15 @@ public class MenuAction extends Action {
         HttpSession session = req.getSession(false);
         if(session == null || session.getAttribute("user") == null) {
             // ログインしていなければログイン画面へリダイレクト
-            res.sendRedirect(req.getContextPath() + "//Login.action");
+            // ここも念のため、先頭にスラッシュを追加しておくとより確実です
+            res.sendRedirect(req.getContextPath() + "/main/Login.action");
             return;
         }
 
         // セッションのuser属性はTeacherオブジェクトである想定
+        // ★追加ここから★
+        System.out.println("MenuAction: /menu.jsp にフォワードします。");
+        // ★追加ここまで★
         req.getRequestDispatcher("/menu.jsp").forward(req, res);
     }
 }
