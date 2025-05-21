@@ -22,6 +22,8 @@ public class MenuAction extends Action {
         // ★追加ここから★
         System.out.println("MenuAction: /menu.jsp にフォワードします。");
         // ★追加ここまで★
-        req.getRequestDispatcher("/menu.jsp").forward(req, res);
+     // MenuAction.java
+        req.getRequestDispatcher("/main/menu.jsp").forward(req, res);
+
     }
 }
