@@ -65,8 +65,9 @@ public class LoginExecuteAction extends Action {
 			session.setAttribute("user", teacher);
 
 			//リダイレクト
-
-			url = "main/Menu.action";
+			// 修正箇所: menu.jsp に直接リダイレクトするように変更
+			// アプリケーションのルートからの絶対パスにするため、先頭にスラッシュ '/' を追加
+			url = "/menu.jsp"; // ★ここを修正します★
 
 			res.sendRedirect(url);
 
@@ -97,4 +98,3 @@ public class LoginExecuteAction extends Action {
 	}
 
 }
-
