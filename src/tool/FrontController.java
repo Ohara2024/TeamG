@@ -20,10 +20,10 @@ public class FrontController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        actionMap.put("/main/Login.action", new LoginAction());
-        actionMap.put("/main/LoginExecute.action", new LoginExecuteAction());
-        actionMap.put("/main/Logout.action", new LogoutAction());
-        actionMap.put("/main/Menu.action", new MenuAction());
+        actionMap.put("/main/Login.Action", new LoginAction());
+        actionMap.put("/main/LoginExecute.Action", new LoginExecuteAction());
+        actionMap.put("/main/Logout.Action", new LogoutAction());
+        actionMap.put("/main/Menu.Action", new MenuAction());
     }
 
     @Override

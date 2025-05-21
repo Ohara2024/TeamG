@@ -13,7 +13,7 @@ public class MenuAction extends Action {
         HttpSession session = req.getSession(false);
         if(session == null || session.getAttribute("user") == null) {
             // ログインしていなければログイン画面へリダイレクト
-            res.sendRedirect(req.getContextPath() + "/main/Login.action");
+            res.sendRedirect(req.getContextPath() + "//Login.action");
             return;
         }
 
