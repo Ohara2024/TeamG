@@ -20,10 +20,11 @@ public class FrontController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        actionMap.put("/main/Login.Action", new LoginAction());
-        actionMap.put("/main/LoginExecute.Action", new LoginExecuteAction());
-        actionMap.put("/main/Logout.Action", new LogoutAction());
-        actionMap.put("/main/Menu.Action", new MenuAction());
+        // マッピングのキーをすべて小文字の .action に変更します
+        actionMap.put("/main/Login.action", new LoginAction());
+        actionMap.put("/main/LoginExecute.action", new LoginExecuteAction());
+        actionMap.put("/main/Logout.action", new LogoutAction());
+        actionMap.put("/main/Menu.action", new MenuAction()); // ★ここを修正します★
     }
 
     @Override
@@ -41,11 +42,12 @@ public class FrontController extends HttpServlet {
     private void process(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String path = request.getServletPath();
+        String path = request.getServletPath(); // 例: /main/Menu.action (小文字)
 
-        Action action = actionMap.get(path);
+        Action action = actionMap.get(path); // ここでマップからアクションを取得
 
         if (action == null) {
+            // アクションが見つからなかった場合、404エラーを返す
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
