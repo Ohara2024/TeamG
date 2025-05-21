@@ -69,21 +69,23 @@
         <h1>得点管理システム</h1>
         <div class="login-box">
             <h2>ログイン</h2>
-            <form action="scoremanager/gakusei/Login.action" method="post">
-                <div class="form-group">
-                    <label>ID</label>
-                    <input type="text" name="id" value="">
-                </div>
-                <div class="form-group">
-                    <label>パスワード</label>
-                    <input type="password" name="pass" id="password">
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" id="showPassword" onclick="togglePassword()">
-                    <label for="showPassword">パスワードを表示</label>
-                </div>
-                <button class="btn-login" type="submit">ログイン</button>
-            </form>
+            <form action="${pageContext.request.contextPath}/main/LoginExecute.action" method="post">
+    <div class="form-group">
+        <label>ID</label>
+        <input type="text" name="id" value="">
+    </div>
+    <div class="form-group">
+        <label>パスワード</label>
+        <input type="password" name="password" id="password">
+
+    </div>
+    <div class="form-check">
+        <input type="checkbox" id="showPassword" onclick="togglePassword()">
+        <label for="showPassword">パスワードを表示</label>
+    </div>
+    <button class="btn-login" type="submit">ログイン</button>
+</form>
+
         </div>
         <footer>
             &copy; 2025 TIC<br>大原学園
@@ -97,4 +99,4 @@
         }
     </script>
 </body>
-</html>
+</html>,\

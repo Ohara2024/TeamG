@@ -6,17 +6,15 @@ import javax.servlet.http.HttpSession;
 
 import tool.Action;
 
-public class LogoutAction implements Action {
+public class LogoutAction extends Action {
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        // セッションを破棄
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        HttpSession session = req.getSession(false);
+        if(session != null) {
+            session.invalidate();  // セッション破棄
         }
-
-        // ログアウト完了画面へ遷移
-        return "logout.jsp";
+        // ログイン画面にリダイレクト
+        res.sendRedirect(req.getContextPath() + "/main/Login.action");
     }
 }
