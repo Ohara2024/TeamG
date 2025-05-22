@@ -67,7 +67,7 @@
     <div class="container">
         <div class="title">ログアウト</div>
         <div class="message">ログアウトしました</div>
-        <div class="login-link"><a href="Login.Action">ログイン</a></div>
+        <div class="login-link"><a href="${pageContext.request.contextPath}/main/Login.action">ログイン</a></div>
     </div>
 
     <footer>
