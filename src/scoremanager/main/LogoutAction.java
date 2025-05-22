@@ -11,10 +11,10 @@ public class LogoutAction extends Action {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
         HttpSession session = req.getSession(false);
-        if(session != null) {
-            session.invalidate();  // セッション破棄
+        if (session != null) {
+            session.invalidate(); // セッション破棄
         }
-        // ログイン画面にリダイレクト
-        res.sendRedirect(req.getContextPath() + "/main/Login.action");
+        // ログアウト完了画面へフォワード
+        req.getRequestDispatcher("/main/logout.jsp").forward(req, res);
     }
 }
