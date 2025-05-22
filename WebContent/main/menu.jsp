@@ -101,12 +101,12 @@
 </head>
 <body>
     <header>
-        <h1>得点管理システム</h1>
-        <div class="logout">
-            ${sessionScope.teacher.name} 様　
-            <a href="Logout.action">ログアウト</a>
-        </div>
-    </header>
+    <h1>得点管理システム</h1>
+    <div class="logout">
+        ${sessionScope.user.name} 様　
+        <a href="Logout.action">ログアウト</a>
+    </div>
+</header>
 
     <div class="container">
         <div class="sidebar">
