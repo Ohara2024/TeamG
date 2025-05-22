@@ -103,8 +103,8 @@
     <header>
     <h1>得点管理システム</h1>
     <div class="logout">
-        ${sessionScope.user.name} 様　
-        <a href="Logout.action">ログアウト</a>
+        ${sessionScope.user.name} 様
+        <a href="${pageContext.request.contextPath}/main/Logout.action">ログアウト</a>
     </div>
 </header>
 
