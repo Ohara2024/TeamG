@@ -63,7 +63,7 @@
     <header>
         <h1>得点管理システム</h1>
     </header>
-
+        
     <div class="container">
         <div class="title">ログアウト</div>
         <div class="message">ログアウトしました</div>
