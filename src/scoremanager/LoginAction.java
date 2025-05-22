@@ -9,7 +9,7 @@ public class LoginAction extends Action {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        // login.jsp にフォワード
-        req.getRequestDispatcher("/login.jsp").forward(req, res);
+        // login.jsp にフォワード (正しいパスを指定)
+        req.getRequestDispatcher("/main/login.jsp").forward(req, res);
     }
 }
