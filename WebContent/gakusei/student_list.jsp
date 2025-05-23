@@ -2,82 +2,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>得点管理システム</title>
-
-<style>
-    body {
-        font-family: "メイリオ", Meiryo, sans-serif;
-        background-color: #f5f5f5;
-        margin: 0;
-        padding: 0;
-    }
-
-    .content {
-        width: 80%;
-        margin: 40px auto;
-        background-color: #ffffff;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    h2 {
-        text-align: center;
-        color: #333;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-
-    th, td {
-        border: 1px solid #ccc;
-        padding: 12px;
-        text-align: center;
-    }
-
-    th {
-        background-color: #f0f0f1;
-        color: #333;
-    }
-
-    tr:nth-child(even) {
-        background-color: #fafafa;
-    }
-
-    tr:hover {
-        background-color: #e6f7ff;
-    }
-
-    .link {
-        text-align: center;
-        margin-top: 30px;
-    }
-
-    .link a {
-        text-decoration: none;
-        color: #007bff;
-        font-weight: bold;
-    }
-
-    .link a:hover {
-        text-decoration: underline;
-    }
-</style>
+    <meta charset="UTF-8">
+    <title>得点管理システム</title>
+    <style>
+        body {
+            font-family: "メイリオ", Meiryo, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .content {
+            width: 80%;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+        tr:hover {
+            background-color: #e6f7ff;
+        }
+        .link {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .link a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 <div class="content">
-<h2>学生一覧</h2>
-<table>
-<tr>
-  <th>入学年度</th>
-  <th>学生番号</th>
-  <th>氏名</th>
-  <th>クラス</th>
-</tr>
+    <h2>学生一覧</h2>
+    <table>
+        <tr>
+            <th>入学年度</th>
+            <th>学生番号</th>
+            <th>氏名</th>
+            <th>クラス</th>
+        </tr>
 <%
     String url = "jdbc:h2:tcp://localhost/~/gakusei";
     String user = "sa";
@@ -92,21 +81,21 @@
         conn = DriverManager.getConnection(url, user, password);
         stmt = conn.createStatement();
 
-        String query = "SELECT 学生.入学年度, 学生.学生番号, 学生.学生名, 学生.クラス FROM 学生 JOIN 学校 ON 学生.学校ID = 学校.学校ID";
+        String query = "SELECT 入学年度, 学生ID AS 学生番号, 学生名, クラス FROM 学生";
         rs = stmt.executeQuery(query);
 
         while (rs.next()) {
             int nyugakuNendo = rs.getInt("入学年度");
-            String gakuseiBangou = rs.getString("学生番号");
+            int gakuseiBangou = rs.getInt("学生番号");
             String name = rs.getString("学生名");
             String kurasu = rs.getString("クラス");
 %>
-<tr>
-  <td><%= nyugakuNendo %></td>
-  <td><%= gakuseiBangou %></td>
-  <td><%= name %></td>
-  <td><%= kurasu %></td>
-</tr>
+        <tr>
+            <td><%= nyugakuNendo %></td>
+            <td><%= gakuseiBangou %></td>
+            <td><%= name %></td>
+            <td><%= kurasu %></td>
+        </tr>
 <%
         }
     } catch (ClassNotFoundException e) {
@@ -123,10 +112,10 @@
         }
     }
 %>
-</table>
-<div class="link">
-<a href="index.jsp">Topページへ</a>
-</div>
+    </table>
+    <div class="link">
+        <a href="index.jsp">Topページへ</a>
+    </div>
 </div>
 </body>
 </html>
