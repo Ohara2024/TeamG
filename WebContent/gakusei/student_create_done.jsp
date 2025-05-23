@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ include file ="menu.jsp" %>
 
 <%
     String result = (String) request.getAttribute("result");
