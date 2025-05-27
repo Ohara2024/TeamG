@@ -83,4 +83,34 @@ public class Test implements Serializable {
 	public void setPoint(int point) {
 		this.point = point;
 	}
+
+	//追加部分
+
+    // ★追加: 学生番号を保持するフィールド
+    private String studentNo;
+
+    // ★追加: 科目コードを保持するフィールド
+    private String subjectCd;
+
+    // ★追加: 学生番号のゲッター
+    public String getStudentNo() {
+        return studentNo;
+    }
+
+    // ★追加: 学生番号のセッター
+    public void setStudentNo(String studentNo) {
+        this.studentNo = studentNo;
+    }
+
+    // ★追加: 科目コードのゲッター
+    public String getSubjectCd() {
+        return subjectCd;
+    }
+
+    // ★追加: 科目コードのセッター
+    public void setSubjectCd(String subjectCd) {
+        this.subjectCd = subjectCd;
+    }
+
+
 }

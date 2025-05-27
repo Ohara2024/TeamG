@@ -405,4 +405,150 @@ public class TestDao extends Dao {
 			return false;
 		}
 	}
+
+	//追加したもの
+
+
+
+
+
+	/**
+     * 入学年度、クラス番号、科目コード、学校コードでテスト結果をフィルタリングして取得します。
+     * @param entYear 入学年度 (nullで全年度)
+     * @param classNum クラス番号 (nullまたは空文字で全クラス)
+     * @param subjectCd 科目コード (nullまたは空文字で全科目)
+     * @param schoolCd 学校コード
+     * @return テスト結果のリスト
+     * @throws Exception データベースアクセスエラー
+     */
+    public List<bean.Test> filter(Integer entYear, String classNum, String subjectCd, String schoolCd) throws Exception {
+        List<bean.Test> tests = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            con = getConnection(); // 親クラス（Dao）のgetConnection()を呼び出すと仮定
+            StringBuilder sql = new StringBuilder(
+                "SELECT T.STUD_NO, T.SUB_CD, T.NO, T.POINT, S.NAME AS STUDENT_NAME, SUB.NAME AS SUBJECT_NAME " +
+                "FROM TEST AS T " +
+                "JOIN STUDENT AS S ON T.STUD_NO = S.NO AND T.SCHOOL_CD = S.SCHOOL_CD " +
+                "JOIN SUBJECT AS SUB ON T.SUB_CD = SUB.CD AND T.SCHOOL_CD = SUB.SCHOOL_CD " +
+                "WHERE T.SCHOOL_CD = ?"
+            );
+            List<Object> paramList = new ArrayList<>();
+            paramList.add(schoolCd);
+
+            if (entYear != null) {
+                sql.append(" AND S.ENT_YEAR = ?");
+                paramList.add(entYear);
+            }
+            if (classNum != null && !classNum.isEmpty()) {
+                sql.append(" AND S.CLASS_NUM = ?");
+                paramList.add(classNum);
+            }
+            if (subjectCd != null && !subjectCd.isEmpty()) {
+                sql.append(" AND T.SUB_CD = ?");
+                paramList.add(subjectCd);
+            }
+
+            sql.append(" ORDER BY S.NO, T.SUB_CD, T.NO"); // 学生番号、科目コード、回数でソート
+
+            st = con.prepareStatement(sql.toString());
+            for (int i = 0; i < paramList.size(); i++) {
+                Object param = paramList.get(i);
+                if (param instanceof String) {
+                    st.setString(i + 1, (String) param);
+                } else if (param instanceof Integer) {
+                    st.setInt(i + 1, (Integer) param);
+                }
+            }
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                bean.Test test = new bean.Test();
+                test.setStudentNo(rs.getString("STUD_NO"));
+                test.setSubjectCd(rs.getString("SUB_CD"));
+                test.setNo(rs.getInt("NO"));
+                test.setPoint(rs.getInt("POINT"));
+                // test.setSchoolCd(schoolCd); // もしTest BeanにsetSchoolCdがあれば有効にする
+                // bean.Student student = new bean.Student(); // Student Beanが適切に定義されていると仮定
+                // student.setNo(rs.getString("STUD_NO"));
+                // student.setName(rs.getString("STUDENT_NAME"));
+                // test.setStudent(student); // もしTest BeanにsetStudentメソッドがあれば有効にする
+
+                // bean.Subject subject = new bean.Subject(); // Subject Beanが適切に定義されていると仮定
+                // subject.setCd(rs.getString("SUB_CD"));
+                // subject.setName(rs.getString("SUBJECT_NAME"));
+                // test.setSubject(subject); // もしTest BeanにsetSubjectメソッドがあれば有効にする
+
+                tests.add(test);
+            }
+        } catch (Exception e) {
+            System.err.println("Error in TestDao.filter: " + e.getMessage());
+            throw e;
+        } finally {
+            if (rs != null) { try { rs.close(); } catch (Exception ignore) {} }
+            if (st != null) { try { st.close(); } catch (Exception ignore) {} }
+            if (con != null) { try { con.close(); } catch (Exception ignore) {} }
+        }
+        return tests;
+    }
+
+    /**
+     * 学生番号と学校コードでテスト結果をフィルタリングして取得します。
+     * @param studentNo 学生番号
+     * @param schoolCd 学校コード
+     * @return テスト結果のリスト
+     * @throws Exception データベースアクセスエラー
+     */
+    public List<bean.Test> filterByStudent(String studentNo, String schoolCd) throws Exception {
+        List<bean.Test> tests = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            con = getConnection(); // 親クラス（Dao）のgetConnection()を呼び出すと仮定
+            String sql = "SELECT T.STUD_NO, T.SUB_CD, T.NO, T.POINT, S.NAME AS STUDENT_NAME, SUB.NAME AS SUBJECT_NAME " +
+                         "FROM TEST AS T " +
+                         "JOIN STUDENT AS S ON T.STUD_NO = S.NO AND T.SCHOOL_CD = S.SCHOOL_CD " +
+                         "JOIN SUBJECT AS SUB ON T.SUB_CD = SUB.CD AND T.SCHOOL_CD = SUB.SCHOOL_CD " +
+                         "WHERE T.STUD_NO = ? AND T.SCHOOL_CD = ? " +
+                         "ORDER BY T.SUB_CD, T.NO"; // 科目コード、回数でソート
+
+            st = con.prepareStatement(sql);
+            st.setString(1, studentNo);
+            st.setString(2, schoolCd);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                bean.Test test = new bean.Test();
+                test.setStudentNo(rs.getString("STUD_NO"));
+                test.setSubjectCd(rs.getString("SUB_CD"));
+                test.setNo(rs.getInt("NO"));
+                test.setPoint(rs.getInt("POINT"));
+                // test.setSchoolCd(schoolCd); // もしTest BeanにsetSchoolCdがあれば有効にする
+                // bean.Student student = new bean.Student(); // Student Beanが適切に定義されていると仮定
+                // student.setNo(rs.getString("STUD_NO"));
+                // student.setName(rs.getString("STUDENT_NAME"));
+                // test.setStudent(student); // もしTest BeanにsetStudentメソッドがあれば有効にする
+
+                // bean.Subject subject = new bean.Subject(); // Subject Beanが適切に定義されていると仮定
+                // subject.setCd(rs.getString("SUB_CD"));
+                // subject.setName(rs.getString("SUBJECT_NAME"));
+                // test.setSubject(subject); // もしTest BeanにsetSubjectメソッドがあれば有効にする
+
+                tests.add(test);
+            }
+        } catch (Exception e) {
+            System.err.println("Error in TestDao.filterByStudent: " + e.getMessage());
+            throw e;
+        } finally {
+            if (rs != null) { try { rs.close(); } catch (Exception ignore) {} }
+            if (st != null) { try { st.close(); } catch (Exception ignore) {} }
+            if (con != null) { try { con.close(); } catch (Exception ignore) {} }
+        }
+        return tests;
+    }
 }

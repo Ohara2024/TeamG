@@ -62,5 +62,33 @@ public class ClassNumDao extends Dao {
 
 		return list;
 	}
+	//変更点以下
+    public List<bean.ClassNum> filterBySchool(String schoolCd) throws Exception {
+        List<bean.ClassNum> classNums = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
 
+        try {
+            con = getConnection(); // 親クラス（Dao）のgetConnection()を呼び出すと仮定
+            st = con.prepareStatement("SELECT CLASS_NUM FROM CLASS_NUM WHERE SCHOOL_CD = ? ORDER BY CLASS_NUM");
+            st.setString(1, schoolCd);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                bean.ClassNum cn = new bean.ClassNum();
+                cn.setClassNum(rs.getString("CLASS_NUM"));
+
+                classNums.add(cn);
+            }
+        } catch (Exception e) {
+            System.err.println("Error in ClassNumDao.filterBySchool: " + e.getMessage());
+            throw e;
+        } finally {
+            if (rs != null) { try { rs.close(); } catch (Exception ignore) {} }
+            if (st != null) { try { st.close(); } catch (Exception ignore) {} }
+            if (con != null) { try { con.close(); } catch (Exception ignore) {} }
+        }
+        return classNums;
+    }
 }
