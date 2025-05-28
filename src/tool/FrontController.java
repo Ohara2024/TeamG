@@ -43,6 +43,7 @@ public class FrontController extends HttpServlet {
 
         String path = request.getServletPath();
         // ★追加ここから★
+        
         System.out.println("FrontController: 受信パス = " + path);
         // ★追加ここまで★
 
