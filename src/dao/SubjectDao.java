@@ -251,4 +251,82 @@ public class SubjectDao extends Dao {
 			return false;
 		}
 	}
+
+	//変更点
+
+
+    /**
+     * 学校コードで科目をフィルタリングして取得します。
+     * @param schoolCd 学校コード
+     * @return 科目のリスト
+     * @throws Exception データベースアクセスエラー
+     */
+    public List<bean.Subject> filterBySchool(String schoolCd) throws Exception {
+        List<bean.Subject> subjects = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            con = getConnection(); // 親クラス（Dao）のgetConnection()を呼び出すと仮定
+            st = con.prepareStatement("SELECT CD, NAME FROM SUBJECT WHERE SCHOOL_CD = ? ORDER BY CD");
+            st.setString(1, schoolCd);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                bean.Subject sub = new bean.Subject();
+                sub.setCd(rs.getString("CD"));
+                sub.setName(rs.getString("NAME"));
+                // Subject BeanにschoolCdフィールドとsetterがあればセット
+                // sub.setSchoolCd(schoolCd); // もしSubjectにsetSchoolCdがあれば有効にする
+                subjects.add(sub);
+            }
+        } catch (Exception e) {
+            System.err.println("Error in SubjectDao.filterBySchool: " + e.getMessage());
+            throw e;
+        } finally {
+            if (rs != null) { try { rs.close(); } catch (Exception ignore) {} }
+            if (st != null) { try { st.close(); } catch (Exception ignore) {} }
+            if (con != null) { try { con.close(); } catch (Exception ignore) {} }
+        }
+        return subjects;
+    }
+
+    /**
+     * 科目コードと学校コードで特定の科目を取得します。
+     * TestListSubjectExecuteActionから呼び出される可能性があります。
+     * @param cd 科目コード
+     * @param schoolCd 学校コード
+     * @return 該当する科目オブジェクト、見つからない場合はnull
+     * @throws Exception データベースアクセスエラー
+     */
+    public bean.Subject get(String cd, String schoolCd) throws Exception {
+        bean.Subject subject = null;
+        Connection con = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            con = getConnection();
+            st = con.prepareStatement("SELECT CD, NAME FROM SUBJECT WHERE CD = ? AND SCHOOL_CD = ?");
+            st.setString(1, cd);
+            st.setString(2, schoolCd);
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                subject = new bean.Subject();
+                subject.setCd(rs.getString("CD"));
+                subject.setName(rs.getString("NAME"));
+                // subject.setSchoolCd(schoolCd); // もしSubjectにsetSchoolCdがあれば有効にする
+            }
+        } catch (Exception e) {
+            System.err.println("Error in SubjectDao.get: " + e.getMessage());
+            throw e;
+        } finally {
+            if (rs != null) { try { rs.close(); } catch (Exception ignore) {} }
+            if (st != null) { try { st.close(); } catch (Exception ignore) {} }
+            if (con != null) { try { con.close(); } catch (Exception ignore) {} }
+        }
+        return subject;
+    }
 }
