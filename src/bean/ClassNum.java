@@ -31,4 +31,17 @@ public class ClassNum implements Serializable {
 	public void setNum(String num) {
 		this.num = num;
 	}
+
+	// ★追加: クラス番号を保持するフィールド
+    private String classNum;
+
+    // ★追加: classNum のゲッター
+    public String getClassNum() {
+        return classNum;
+    }
+
+    // ★追加: classNum のセッター
+    public void setClassNum(String classNum) {
+        this.classNum = classNum;
+    }
 }
