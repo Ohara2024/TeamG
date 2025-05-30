@@ -446,4 +446,150 @@ public class StudentDao extends Dao {
 			return false;
 		}
 	}
+
+	//変更点
+
+
+    /**
+     * 学校コードで学生の入学年度をフィルタリングして取得します。
+     * @param schoolCd 学校コード
+     * @return 入学年度のリスト（重複なし、昇順）
+     * @throws Exception データベースアクセスエラー
+     */
+    public List<Integer> getEntYearBySchool(String schoolCd) throws Exception {
+        List<Integer> entYears = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            con = getConnection(); // 親クラス（Dao）のgetConnection()を呼び出すと仮定
+            st = con.prepareStatement("SELECT DISTINCT ENT_YEAR FROM STUDENT WHERE SCHOOL_CD = ? ORDER BY ENT_YEAR");
+            st.setString(1, schoolCd);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                entYears.add(rs.getInt("ENT_YEAR"));
+            }
+        } catch (Exception e) {
+            System.err.println("Error in StudentDao.getEntYearBySchool: " + e.getMessage());
+            throw e;
+        } finally {
+            if (rs != null) { try { rs.close(); } catch (Exception ignore) {} }
+            if (st != null) { try { st.close(); } catch (Exception ignore) {} }
+            if (con != null) { try { con.close(); } catch (Exception ignore) {} }
+        }
+        return entYears;
+    }
+
+    /**
+     * 学生番号と学校コードで特定の学生を取得します。
+     * TestDao（またはTestListSubjectExecuteAction）から呼び出される可能性があります。
+     * @param no 学生番号
+     * @param schoolCd 学校コード
+     * @return 該当する学生オブジェクト、見つからない場合はnull
+     * @throws Exception データベースアクセスエラー
+     */
+    public bean.Student get(String no, String schoolCd) throws Exception {
+        bean.Student student = null;
+        Connection con = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            con = getConnection();
+            st = con.prepareStatement("SELECT * FROM STUDENT WHERE NO = ? AND SCHOOL_CD = ?");
+            st.setString(1, no);
+            st.setString(2, schoolCd);
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                student = new bean.Student();
+                student.setNo(rs.getString("NO"));
+                student.setName(rs.getString("NAME"));
+                student.setEntYear(rs.getInt("ENT_YEAR"));
+                student.setClassNum(rs.getString("CLASS_NUM"));
+                student.setAttend(rs.getBoolean("IS_ATTEND"));
+                // student.setSchoolCd(rs.getString("SCHOOL_CD")); // もしStudentにsetSchoolCdがあれば有効にする
+            }
+        } catch (Exception e) {
+            System.err.println("Error in StudentDao.get: " + e.getMessage());
+            throw e;
+        } finally {
+            if (rs != null) { try { rs.close(); } catch (Exception ignore) {} }
+            if (st != null) { try { st.close(); } catch (Exception ignore) {} }
+            if (con != null) { try { con.close(); } catch (Exception ignore) {} }
+        }
+        return student;
+    }
+
+    /**
+     * 入学年度、クラス番号、学校コード、在学フラグで学生をフィルタリングします。
+     * TestDaoから呼び出される可能性があります。
+     * @param entYear 入学年度 (nullで全年度)
+     * @param classNum クラス番号 (nullまたは空文字で全クラス)
+     * @param schoolCd 学校コード
+     * @param isAttend 在学フラグ (nullで全て、trueで在学者のみ、falseで卒業者のみ)
+     * @return 学生のリスト
+     * @throws Exception データベースアクセスエラー
+     */
+    public List<bean.Student> filter(Integer entYear, String classNum, String schoolCd, Boolean isAttend) throws Exception {
+        List<bean.Student> students = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            con = getConnection();
+            StringBuilder sql = new StringBuilder("SELECT * FROM STUDENT WHERE SCHOOL_CD = ? ");
+            List<Object> paramList = new ArrayList<>();
+            paramList.add(schoolCd);
+
+            if (entYear != null) {
+                sql.append("AND ENT_YEAR = ? ");
+                paramList.add(entYear);
+            }
+            if (classNum != null && !classNum.isEmpty()) {
+                sql.append("AND CLASS_NUM = ? ");
+                paramList.add(classNum);
+            }
+            if (isAttend != null) {
+                sql.append("AND IS_ATTEND = ? ");
+                paramList.add(isAttend);
+            }
+            sql.append("ORDER BY NO");
+
+            st = con.prepareStatement(sql.toString());
+            for (int i = 0; i < paramList.size(); i++) {
+                Object param = paramList.get(i);
+                if (param instanceof String) {
+                    st.setString(i + 1, (String) param);
+                } else if (param instanceof Integer) {
+                    st.setInt(i + 1, (Integer) param);
+                } else if (param instanceof Boolean) {
+                    st.setBoolean(i + 1, (Boolean) param);
+                }
+            }
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                bean.Student student = new bean.Student();
+                student.setNo(rs.getString("NO"));
+                student.setName(rs.getString("NAME"));
+                student.setEntYear(rs.getInt("ENT_YEAR"));
+                student.setClassNum(rs.getString("CLASS_NUM"));
+                student.setAttend(rs.getBoolean("IS_ATTEND"));
+                // student.setSchoolCd(rs.getString("SCHOOL_CD")); // もしStudentにsetSchoolCdがあれば有効にする
+                students.add(student);
+            }
+        } catch (Exception e) {
+            System.err.println("Error in StudentDao.filter: " + e.getMessage());
+            throw e;
+        } finally {
+            if (rs != null) { try { rs.close(); } catch (Exception ignore) {} }
+            if (st != null) { try { st.close(); } catch (Exception ignore) {} }
+            if (con != null) { try { con.close(); } catch (Exception ignore) {} }
+        }
+        return students;
+    }
 }
