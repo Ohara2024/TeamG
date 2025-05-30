@@ -101,40 +101,48 @@
 </head>
 <body>
     <header>
-    <h1>得点管理システム</h1>
-    <div class="logout">
-        ${sessionScope.user.name} 様
-        <a href="${pageContext.request.contextPath}/main/Logout.action">ログアウト</a>
-    </div>
-</header>
+        <h1>得点管理システム</h1>
+        <div class="logout">
+            ${sessionScope.user.name} 様
+            <%-- ログアウトリンクもコンテキストパスを追加 --%>
+            <a href="${pageContext.request.contextPath}/main/Logout.action">ログアウト</a>
+        </div>
+    </header>
 
     <div class="container">
         <div class="sidebar">
             <div class="section-title">メニュー</div>
-            <a href="scoremanager/StudentList.action">学生管理</a>
+            <%-- 学生管理のリンクにコンテキストパスを追加 --%>
+            <a href="${pageContext.request.contextPath}/scoremanager/StudentList.action">学生管理</a>
             <div class="section-title">成績管理</div>
-            <a href="scoremanager/ScoreInsertForm.action">成績登録</a>
-            <a href="scoremanager/ScoreList.action">成績参照</a>
-            <a href="scoremanager/SubjectList.action">科目管理</a>
+            <%-- 成績登録のリンクにコンテキストパスを追加 --%>
+            <a href="${pageContext.request.contextPath}/scoremanager/ScoreInsertForm.action">成績登録</a>
+            <%-- 成績参照のリンクにコンテキストパスを追加 --%>
+            <a href="${pageContext.request.contextPath}/scoremanager/ScoreList.action">成績参照</a>
+            <%-- 科目管理のリンクにコンテキストパスを追加 --%>
+            <a href="${pageContext.request.contextPath}/scoremanager/SubjectList.action">科目管理</a>
         </div>
 
         <div class="main-content">
-    <div class="section-title">メニュー</div>
-    <div class="card-container">
-        <div class="card student-card">
-            <a href="scoremanager/StudentList.action">学生管理</a>
+            <div class="section-title">メニュー</div>
+            <div class="card-container">
+                <div class="card student-card">
+                    <%-- 学生管理のリンクにコンテキストパスを追加 --%>
+                    <a href="${pageContext.request.contextPath}/scoremanager/StudentList.action">学生管理</a>
+                </div>
+                <div class="card score-card">
+                    <div class="section-title">成績管理</div>
+                    <%-- 成績登録のリンクにコンテキストパスを追加 --%>
+                    <a href="${pageContext.request.contextPath}/scoremanager/ScoreInsertForm.action">成績登録</a>
+                    <%-- 成績参照のリンクにコンテキストパスを追加 --%>
+                    <a href="${pageContext.request.contextPath}/scoremanager/ScoreList.action">成績参照</a>
+                </div>
+                <div class="card subject-card">
+                    <%-- 科目管理のリンクにコンテキストパスを追加 --%>
+                    <a href="${pageContext.request.contextPath}/scoremanager/SubjectList.action">科目管理</a>
+                </div>
+            </div>
         </div>
-        <div class="card score-card">
-            <div class="section-title">成績管理</div>
-            <a href="scoremanager/ScoreInsertForm.action">成績登録</a>
-            <a href="scoremanager/ScoreList.action">成績参照</a>
-        </div>
-        <div class="card subject-card">
-            <a href="scoremanager/SubjectList.action">科目管理</a>
-        </div>
-    </div>
-</div>
-
     </div>
 
     <footer>
