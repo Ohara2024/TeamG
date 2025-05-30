@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ include file ="menu.jsp" %>
+<jsp:include page="menu.jsp" />
+
 
 <html>
 <head>
