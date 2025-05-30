@@ -111,26 +111,26 @@
     <div class="container">
         <div class="sidebar">
             <div class="section-title">メニュー</div>
-            <a href="student/StudentList.action">学生管理</a>
+            <a href="scoremanager/StudentList.action">学生管理</a>
             <div class="section-title">成績管理</div>
-            <a href="score/ScoreInsertForm.action">成績登録</a>
-            <a href="score/ScoreList.action">成績参照</a>
-            <a href="subject/SubjectList.action">科目管理</a>
+            <a href="scoremanager/ScoreInsertForm.action">成績登録</a>
+            <a href="scoremanager/ScoreList.action">成績参照</a>
+            <a href="scoremanager/SubjectList.action">科目管理</a>
         </div>
 
         <div class="main-content">
     <div class="section-title">メニュー</div>
     <div class="card-container">
         <div class="card student-card">
-            <a href="student/StudentList.action">学生管理</a>
+            <a href="scoremanager/StudentList.action">学生管理</a>
         </div>
         <div class="card score-card">
             <div class="section-title">成績管理</div>
-            <a href="score/ScoreInsertForm.action">成績登録</a>
-            <a href="score/ScoreList.action">成績参照</a>
+            <a href="scoremanager/ScoreInsertForm.action">成績登録</a>
+            <a href="scoremanager/ScoreList.action">成績参照</a>
         </div>
         <div class="card subject-card">
-            <a href="subject/SubjectList.action">科目管理</a>
+            <a href="scoremanager/SubjectList.action">科目管理</a>
         </div>
     </div>
 </div>
