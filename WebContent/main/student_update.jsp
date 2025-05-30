@@ -90,6 +90,6 @@
         <input type="submit" value="更新">
     </form>
 
-    <a href="student">← 学生一覧に戻る</a>
+    <a href="student">←学生一覧に戻る</a>
 </body>
 </html>

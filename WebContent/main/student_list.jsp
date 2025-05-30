@@ -73,7 +73,7 @@
 <body>
     <h2>学生一覧</h2>
 
-    <a href="student?action=create" class="button">＋ 学生新規登録</a>
+    <a href="student?action=create" class="button">＋学生新規登録</a>
 
     <table>
         <tr>

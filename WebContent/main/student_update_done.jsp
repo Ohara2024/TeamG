@@ -33,7 +33,7 @@
 <body>
     <div class="box">
         <h2>学生情報を更新しました。</h2>
-        <a href="student">← 学生一覧へ戻る</a>
+        <a href="student">←学生一覧へ戻る</a>
     </div>
 </body>
 </html>
